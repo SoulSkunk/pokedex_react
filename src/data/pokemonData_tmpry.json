@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Bulbasaur",
+    "type": "Grass",
+    "description": "Bulbasaur is a seed Pokémon. It is known for its ability to photosynthesize.",
+    "attacks": ["Vine Whip", "Razor Leaf", "Sleep Powder"]
+  },
+  {
+    "id": 2,
+    "name": "Charmander",
+    "type": "Fire",
+    "description": "Charmander is a lizard Pokémon. It can breathe fire and is very affectionate.",
+    "attacks": ["Ember", "Flamethrower", "Fire Spin"]
+  },
+  {
+    "id": 3,
+    "name": "Squirtle",
+    "type": "Water",
+    "description": "Squirtle is a turtle Pokémon. It is known for its powerful water attacks.",
+    "attacks": ["Water Gun", "Bubble", "Hydro Pump"]
+  },
+  {
+    "id": 4,
+    "name": "Pidgey",
+    "type": "Normal",
+    "description": "Pidgey is a small bird Pokémon. It is known for its strong wings.",
+    "attacks": ["Tackle", "Gust", "Quick Attack"]
+  },
+  {
+    "id": 5,
+    "name": "Rattata",
+    "type": "Normal",
+    "description": "Rattata is a purple rodent Pokémon. It is known for its sharp teeth.",
+    "attacks": ["Bite", "Quick Attack", "Hyper Fang"]
+  },
+  {
+    "id": 6,
+    "name": "Jigglypuff",
+    "type": "Normal",
+    "description": "Jigglypuff is a balloon Pokémon. It sings to put others to sleep.",
+    "attacks": ["Sing", "Pound", "Rollout"]
+  },
+  {
+    "id": 7,
+    "name": "Zubat",
+    "type": "Poison",
+    "description": "Zubat is a bat Pokémon. It uses echolocation to navigate in the dark.",
+    "attacks": ["Confuse Ray", "Leech Life", "Wing Attack"]
+  },
+  {
+    "id": 8,
+    "name": "Psyduck",
+    "type": "Water",
+    "description": "Psyduck is a duck Pokémon. It suffers from constant headaches.",
+    "attacks": ["Water Gun", "Confusion", "Psychic"]
+  }
+]
