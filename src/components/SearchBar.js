@@ -2,7 +2,7 @@ import React from "react";
 
 function SearchBar({ searchTerm, setSearchTerm }) {
   return (
-    <div className="mb-4 flex justify-center mt-10 mb-10">
+    <div className=" justify-center ml-6 mr-6 mt-10 mb-10">
       <input
         type="text"
         placeholder="Rechercher un Pokémon..."

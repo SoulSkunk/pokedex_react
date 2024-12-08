@@ -1,49 +1,91 @@
-import React from "react";
-import { useParams } from "react-router-dom"; // Importez useParams
-import pokemonData_tmpry from "../data/pokemonData_tmpry.json";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import "../App.css";
+import Header from "./Header";
+import ColorElement from "./ColorElement";
+
+import { LanguageContext } from "./LanguageContext";
 
 function Details() {
-  // Récupération de l'id du Pokémon depuis les paramètres
   const { id } = useParams();
-  const packageId = parseInt(id); // Convertir l'id en entier
-
-  // Cherche l'objet correspondant à l'ID
-  const selectedPokemon = pokemonData_tmpry.find(
-    (item) => item.id === packageId
+  const location = useLocation();
+  const { language } = useContext(LanguageContext);
+  const [selectedPokemon, setSelectedPokemon] = useState(
+    location.state?.pokemon || null
   );
+
+  // Fonction de fetch pour récupérer les données en cas de besoin
+  const fetchPokemonDataById = async () => {
+    try {
+      const response = await fetch(
+        "https://pokedex-jgabriele.vercel.app/pokemons.json"
+      );
+      const data = await response.json();
+      const pokemon = data.find((item) => item.id === parseInt(id));
+      setSelectedPokemon(pokemon);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  };
+
+  //Déclenchement du fetch
+  useEffect(() => {
+    // Si `selectedPokemon` est `null`, effectuer un fetch
+    if (!selectedPokemon) {
+      fetchPokemonDataById();
+    }
+  }, [selectedPokemon, id]);
+
+  //Loading
+  if (!selectedPokemon) {
+    return <div>Chargement des données du Pokémon...</div>;
+  }
+
+  // Fonction pour générer l'URL de l'image locale
+  const getImageUrl = (id) => {
+    return `/pokemon_img/${id}.png`;
+  };
 
   return (
     <div className="Details">
-      {/* Affiche le titre du Pokémon */}
-      <h1 className="text-3xl font-bold mb-4">
-        Détails de {selectedPokemon ? selectedPokemon.name : "non trouvés"}
+      <Header />
+      <h1 className="text-5xl font-bold mb-4 text-center mt-6 text-white">
+        {selectedPokemon.names?.[language] || selectedPokemon.names?.en}
       </h1>
-      {/* Affiche les détails du Pokémon si trouvé */}
-      {selectedPokemon && (
-        <div className="flex flex-col md:flex-row items-center gap-8">
-          <div className="md:w-1/2">
-            <img
-              src="https://images.unsplash.com/photo-1603871165848-0aa92c869fa1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80" // Vous pouvez remplacer cela par une image du Pokémon si vous en avez une
-              alt={selectedPokemon.name}
-              className="w-full rounded-lg"
-            />
-          </div>
-          <div className="md:w-1/2">
-            <h2 className="text-2xl font-bold mb-2">
-              Type : {selectedPokemon.type}
-            </h2>
-            <p className="text-lg mb-4">{selectedPokemon.description}</p>
-            <h3 className="text-lg font-bold mb-2">Attaques :</h3>
-            <ul className="list-disc pl-5">
-              {selectedPokemon.attacks &&
-                selectedPokemon.attacks.map((attack, index) => (
-                  <li key={index}>{attack}</li>
-                ))}
-            </ul>
+      <br />
+      <h2 className="text-3xl font-bold mb-2 text-center text-white">
+        <div className="flex justify-center gap-2">
+          {selectedPokemon.types?.map((type) => (
+            <ColorElement key={type} type={type} />
+          ))}
+        </div>
+      </h2>
+      <div className=" md:flex-row  ">
+        <div className="flex justify-center">
+          <img
+            src={getImageUrl(selectedPokemon.id)} // Utiliser l'URL générée pour l'image
+            alt={selectedPokemon.names?.[language] || selectedPokemon.names?.en}
+            className="w-96 h-auto rounded-lg"
+          />
+        </div>
+        <div className="md:flex-row text-center">
+          <h3 className="text-3xl font-bold mb-2 text-white ">Attacks </h3>
+          <div className="space-y-4 space-x-2">
+            {selectedPokemon.moves ? (
+              selectedPokemon.moves.map((attack, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-green-500 text-white py-1 px-4 rounded-full text-center w-auto"
+                >
+                  {attack}
+                </span>
+              ))
+            ) : (
+              <span>Aucune attaque disponible</span>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

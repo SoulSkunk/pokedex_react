@@ -1,30 +1,26 @@
 import "./App.css";
 import React from "react";
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Header from "./components/Header";
+import { LanguageProvider } from "./components/LanguageContext";
+
 import Home from "./components/Home";
 import Details from "./components/Details";
+import MyPokemons from "./components/MyPokemons";
 
 function App() {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <>
-        <Route path="/" element={<Home />} />
-        <Route path="/details/:id" element={<Details />} />
-      </>
-    )
-  );
+  const router = createBrowserRouter([
+    { path: "/", element: <Home /> },
+    { path: "/details/:id", element: <Details /> },
+    { path: "/my-pokemons", element: <MyPokemons /> },
+  ]);
+
   return (
-    <div className="App">
-      <Header />
-      <RouterProvider router={router} />
-    </div>
+    <LanguageProvider>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </LanguageProvider>
   );
 }
 
